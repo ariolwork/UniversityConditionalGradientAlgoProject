@@ -3,6 +3,7 @@ from tkinter import messagebox
 import numpy as np
 from tkinter.scrolledtext import ScrolledText
 from task import *
+from symbol_func import *
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -25,7 +26,7 @@ alpha_text.set(alpha1)
 u0 = StringVar()
 u0.set("0;0.0")
 func_text = StringVar()
-func_text.set("")
+func_text.set("x**2+x*y+y**2")
 is_steps_frames = IntVar()
 is_steps_frames.set(1)
 steps_frames = StringVar()
@@ -124,7 +125,16 @@ def my_func_button_press():
     status = 1
 
 def calculate():
-    return 1
+    stps = "-1"
+    if is_steps_frames.get() == 1:
+        stps = steps_frames.get()
+    acc = "-1"
+    if is_accuracy_frames.get() == 1:
+        acc = accuracy_frames.get()
+    c1 = Calculate_and_print_ans()
+    f,d = get_func_and_st_der(func_text.get())
+    c1.calculate(f, frames0 ,d, u0.get(), alpha_type, acc, stps)
+    c1.draw()
 
 
 btn0 = Button(text="examples", background="#ccc", foreground="#000", activebackground="#ccc",
