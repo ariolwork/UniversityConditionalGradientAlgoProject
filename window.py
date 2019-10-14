@@ -1,8 +1,9 @@
 from tkinter import *
-from tkinter import messagebox
+#from tkinter import messagebox
 from my_numpy import np
 from tkinter.scrolledtext import ScrolledText
 from task import *
+from tests import *
 from symbol_func import *
 import matplotlib
 matplotlib.use("TkAgg")
