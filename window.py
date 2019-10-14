@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
-import numpy as np
+from my_numpy import np
 from tkinter.scrolledtext import ScrolledText
 from task import *
 from symbol_func import *
@@ -79,7 +79,7 @@ class Calculate_and_print_ans:
 
 
 
-def set_alpha_text():
+def set_alpha_text(): 
     if alpha_type.get() == 1:
         alpha_text.set(alpha1)
     elif alpha_type.get() == 2:

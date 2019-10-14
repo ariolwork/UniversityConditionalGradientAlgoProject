@@ -1,6 +1,7 @@
 import sympy.abc 
 import sympy
 from sympy import *
+from my_numpy import *
 from sympy.core.sympify import kernS
 import sympy.abc 
 import copy
@@ -26,7 +27,7 @@ def get_func_and_st_der(str):
             u1[i] = u1[i]+eps
             der.append((f1(u1)-f1(u))/eps)
             u1[i] = u[i]-eps
-        return der
+        return np.array(der)
 
     return f1, get_standart_der
 

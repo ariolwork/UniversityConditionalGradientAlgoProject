@@ -1,7 +1,7 @@
-import pandas as pd
-import numpy as np
 from scipy.optimize import linprog
 import math
+# от рукинаписанные нужные части numpy
+from my_numpy import *
 
 eps = 0.00001
 
@@ -72,7 +72,7 @@ class Job:
     
     def get_next_u(self, u1_k):
         self.k+=1
-        return self.u_k + self.__alpha(self, u1_k)*(u1_k - self.u_k)
+        return self.u_k + (u1_k - self.u_k)*self.__alpha(self, u1_k)
     
     def find_u1_k(self):
         return self.frames.minimize(self.f, self.frames, self.u_k)
@@ -88,7 +88,7 @@ class One_variable_function_minimisation_methods:
             u1 = (a+b-sigma)/2
             u2 = (a+b+sigma)/2
             if func(u1)<=func(u2):
-                b = u2
+                b = u2self.__alpha(self, u1_k)
             else:
                 a = u1
         return -1
@@ -169,10 +169,10 @@ def frames_minnimize_function(func, frames, u_k):
             ans.append(frames.b[i])
         else:
             ans.append((frames.a[i]+frames.b[i])/2)
-    return ans
+    return np.array(ans)
 
 def symplex_meyhod_minimize_function(func, frames, u_k):
-    return linprog(func.fder(u_k), frames.A, frames.b).x
+    return np.array(linprog(func.fder(u_k), frames.A, frames.b).x)
 
 
 # x^2+xy+y^2
@@ -261,4 +261,4 @@ def calculate_m(job, eps, steps):
         return method_steps(job, steps)
     return method_full(job, eps, steps)
 
-#calculate_m(job1, -1, 100)
+calculate_m(job1, -1, 100)
