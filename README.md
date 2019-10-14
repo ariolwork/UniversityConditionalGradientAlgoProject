@@ -36,7 +36,7 @@ J(u)-J(u_k) = <J'(u_k), u-u_k> + o(|u - u_k|)
 
 a_k возьмем пока 1/(k+1)
 
-# window 
+# img
 ![image2](https://github.com/ariolwork/uni_conditional_gradient/blob/master/img/1.png)
 ![image2](https://github.com/ariolwork/uni_conditional_gradient/blob/master/img/2.png)
 ![image2](https://github.com/ariolwork/uni_conditional_gradient/blob/master/img/3.png)
