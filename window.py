@@ -9,39 +9,41 @@ matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
+#alpha descriptions
 alpha1 = "alpha_k = 1/(k+1)\n------------------------\nне гарантирует монотонности"
 alpha2 = "alpha = 1\nwhile J(u_(k+1))>=J(u_k):\n    alpha/=2\n------------------------\nгарантирует монотонность"
 alpha3 = "0<=alpha_k<=1\nf_k(alpha_k) = min(0,1)f_k(a)\nf_k(a)=J(u_k+a(u1_k-u_k))\n------------------------\nметод минизации\nфункции одной переменной"
 
-
+#create main window
 root = Tk()
-root.title("Fuck")
+root.title("F")
 root.geometry("600x600")
-
-status = 0#0 - примеры 1- ввод своей функции
-alpha_type = IntVar()
+# window status
+status = 0  #0 - примеры 1- ввод своей функции
+alpha_type = IntVar() # type number of chosen alpha
 alpha_type.set(1)
-alpha_text = StringVar()
+alpha_text = StringVar() # text describtion of chosen alpha
 alpha_text.set(alpha1)
-u0 = StringVar()
+u0 = StringVar() # input text area of start point
 u0.set("0;0.0")
-func_text = StringVar()
+func_text = StringVar() # input text area of function
 func_text.set("x**2+x*y+y**2")
-is_steps_frames = IntVar()
+is_steps_frames = IntVar() # restrinct  count of steps?
 is_steps_frames.set(1)
-steps_frames = StringVar()
+steps_frames = StringVar() # limit count of steps
 steps_frames.set(10000)
-is_accuracy_frames = IntVar()
+is_accuracy_frames = IntVar() # restrinct accuracy of answer?
 is_accuracy_frames.set(1)
-accuracy_frames = StringVar()
+accuracy_frames = StringVar() # string input frames
 accuracy_frames.set("0.000001")
 
-
+# class for making new window with nice presentation
 class Calculate_and_print_ans:
     def __init__(self):
         self.root = Tk()
         self.root.title("Answer")
         self.root.geometry("800x400")
+    # call calculation
     def calculate(self, func, frames, fder, u_0,  alpha_num, eps, steps):
         func0 = Func(func, fder)
         alpha = alpha_1
@@ -54,12 +56,14 @@ class Calculate_and_print_ans:
         job.check_errors()
         print(eps, " ", steps)
         self.answ = calculate_m(job, float(eps), int(steps))
+    # make string answer from numerical
     def __get_step_string(self):
         a = "i|  f  |  u  \n--------------------\n"
         for i in range(0, len(self.answ[2])):
             a+="{}| {} | {} \n".format(i, self.answ[2][i], self.answ[3][i])
         return a
 
+    # draw window and content
     def draw(self):
         Label(self.root, text="f:     {}".format(self.answ[0]), fg="#000", wraplength=0, font="Arial 11", padx="10", justify=RIGHT, anchor="nw").place(relx=.0, rely=.05, anchor="sw", relheight=.05, relwidth=.4, bordermode=INSIDE)
         Label(self.root, text="u:     {}".format(self.answ[1]), fg="#000", wraplength=0, font="Arial 11", padx="10", justify=RIGHT, anchor="nw").place(relx=.0, rely=.1, anchor="sw", relheight=.05, relwidth=.4, bordermode=INSIDE)
@@ -78,7 +82,7 @@ class Calculate_and_print_ans:
         self.root.mainloop()
 
 
-
+# chose alpha text from chosen number
 def set_alpha_text(): 
     if alpha_type.get() == 1:
         alpha_text.set(alpha1)
@@ -87,6 +91,7 @@ def set_alpha_text():
     else:
         alpha_text.set(alpha3)
 
+# open and hide example menu
 def examples_button_press():
     global status
     if status == 0:
@@ -96,9 +101,11 @@ def examples_button_press():
         status = 0
         btn_example0.place(relx=.0, rely=.25, anchor="sw", relheight=.25, relwidth=.6, bordermode=INSIDE)
         btn_example1.place(relx=.0, rely=.5, anchor="sw", relheight=.25, relwidth=.6, bordermode=INSIDE)
+# hide example menu
 def hide_examples():
     btn_example0.place_forget()
     btn_example1.place_forget()
+# zero example chosen
 def example_0_press():
     stps = "-1"
     if is_steps_frames.get() == 1:
@@ -109,6 +116,7 @@ def example_0_press():
     c1 = Calculate_and_print_ans()
     c1.calculate(f0, frames0 ,f0der, u0.get(), alpha_type, acc, stps)
     c1.draw()
+# furst example chosen
 def example_1_press():
     stps = "-1"
     if is_steps_frames.get() == 1:
@@ -119,11 +127,7 @@ def example_1_press():
     c1 = Calculate_and_print_ans()
     c1.calculate(f0, frames1 ,f0der, u0.get(), alpha_type, acc, stps)
     c1.draw()
-
-def my_func_button_press():
-    global status
-    status = 1
-
+# calculate own function
 def calculate():
     stps = "-1"
     if is_steps_frames.get() == 1:
@@ -136,13 +140,10 @@ def calculate():
     c1.calculate(f, frames0 ,d, u0.get(), alpha_type, acc, stps)
     c1.draw()
 
-
+# create elements of main form
 btn0 = Button(text="examples", background="#ccc", foreground="#000", activebackground="#ccc",
              padx="10", pady="4", font="Arial 14", width="20", command=examples_button_press)
 btn0.place(relx=.8, rely=.05, anchor="sw", relheight=.05, relwidth=.195, bordermode=INSIDE)
-#btn1 = Button(text="own", background="#ccc", foreground="#000", activebackground="#ccc",
-#             padx="10", pady="4", font="Arial 14", width="20", command=my_func_button_press)
-#btn1.place(relx=.8, rely=.1, anchor="sw", relheight=.05, relwidth=.195, bordermode=INSIDE)
 btn2 = Button(text="calculate", background="#ccc", foreground="#000", activebackground="#ccc",
              padx="10", pady="4", font="Arial 14", width="20", command=calculate)
 btn2.place(relx=.6, rely=.99, anchor="sw", relheight=.05, relwidth=.395, bordermode=INSIDE)

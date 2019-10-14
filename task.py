@@ -5,6 +5,8 @@ from my_numpy import *
 
 eps = 0.00001
 
+
+# class that contain function, it's derivative and spetial combination for optimization
 class Func:
     def __init__(self, func, func_der):
         self.f = func
@@ -13,7 +15,7 @@ class Func:
     def J_k(self, u_k, u):
         return sum(self.fder(u_k) * (u - u_k))
         
-        
+# class that contain some type frames for optimisation and minimization method for this type of frames and linear function
 class Frames:
     #-----------------------------------------------
     #type 0: frames like a_i <= u_i <= b_i
@@ -55,43 +57,36 @@ class Frames:
     def get_size(self):
         return self.size(self)    
 
+# class of task contains function, frames and some help functions and parameters
 class Job:
     def __init__(self, func, frames, u_0, alpha):
         self.f = func
         self.frames = frames
-        self.u_0 = u_0
-        self.u_k = u_0
-        self.__alpha = alpha
-        self.k = 0
+        self.u_0 = u_0  # start point
+        self.u_k = u_0 # the point got last time
+        self.__alpha = alpha # rule(function) for alpha calculation
+        self.k = 0 # step number
      
+    # сheck task by
+    # compare dimension of function, derivative, frames and x 
     def check_errors(self):
         a = type(self.f.f(self.u_0))
         b = len(self.f.fder(self.u_0))
         c = self.frames.get_size()
         print("func:",a,"\nframes:",c,"\nder:",b,"\nu_0:", len(self.u_0), "\n")
     
+    # calculate new point using previus
     def get_next_u(self, u1_k):
         self.k+=1
         return self.u_k + (u1_k - self.u_k)*self.__alpha(self, u1_k)
     
+    # find abutting poin
     def find_u1_k(self):
         return self.frames.minimize(self.f, self.frames, self.u_k)
 
-class One_variable_function_minimisation_methods:
-    #---------------------------------------------------
-    @staticmethod
-    def bisection_method(func, a, b, eps=0.000001):
-        while True:
-            if b-a < eps:
-                return (a+b)/2
-            sigma = (b-a)/2.0
-            u1 = (a+b-sigma)/2
-            u2 = (a+b+sigma)/2
-            if func(u1)<=func(u2):
-                b = u2self.__alpha(self, u1_k)
-            else:
-                a = u1
-        return -1
+
+# one variable function minimisation methods
+class One_variable_function_minimisation_methods:    
     #---------------------------------------------------
     @staticmethod
     def golden_ratio_method(func, a, b, eps=0.000001):
@@ -133,14 +128,17 @@ class One_variable_function_minimisation_methods:
             else:
                 b = un
 
+
+#testng of one variable function minimisation methods
 #print(One_variable_function_minimisation_methods.bisection_method((lambda x: x*x*x-x*x), -5, 1))
 #print(One_variable_function_minimisation_methods.golden_ratio_method((lambda x: x*x*x-x*x), -5, 1))
 #print(One_variable_function_minimisation_methods.tangent_method(Func((lambda x: x*x), (lambda x: 2.0*x)), -1, 2))
 
-
+# alpha calculate rule 1
 def alpha_1(J, u1_k):
     return 1.0/(J.k+1)
 
+# alpha calculate rule 2
 def alpha_2(J, u1_k):
     alpha = 1.0
     while True:
@@ -152,6 +150,7 @@ def alpha_2(J, u1_k):
         alpha/=2.0
     return 0.0
 
+# alpha calculate rule 3 (safety)
 def alpha_3(J, u1_k):
     def f_k(alpha):
         return J.f.f(J.u_k+alpha*(u1_k-J.u_k))
@@ -159,6 +158,8 @@ def alpha_3(J, u1_k):
         return np.dot((u1_k-J.u_k),J.f.fder(J.u_k+alpha*(u1_k-J.u_k)))
     return One_variable_function_minimisation_methods.tangent_method(Func(f_k, f_k_der), 0, 1)
 
+
+# minimazation function for spetial frames type (a<x<b)
 def frames_minnimize_function(func, frames, u_k):
     ans = []
     der = func.fder(u_k)
@@ -171,10 +172,12 @@ def frames_minnimize_function(func, frames, u_k):
             ans.append((frames.a[i]+frames.b[i])/2)
     return np.array(ans)
 
+# minimisation function(symplex method) for spetioal(linear) type of frames
 def symplex_meyhod_minimize_function(func, frames, u_k):
     return np.array(linprog(func.fder(u_k), frames.A, frames.b).x)
 
 
+#test func
 # x^2+xy+y^2
 def f0(u):
     return u[0]*u[0]+u[0]*u[1]+u[1]*u[1]+0.0
@@ -200,6 +203,9 @@ job2 = Job(func0, frames1, np.array([1, 0]), alpha_1) #u0=(1, 0)
 job3 = Job(func0, frames0, np.array([0, 0]), alpha_1) #u0=(0, 0)
 #job3.check_errors()
 
+
+
+# method for different stop rules
 def calculate_m(job, eps, steps):
     def method_full(J, eps, steps):
         f_sequ = []

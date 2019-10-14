@@ -10,6 +10,7 @@ from sympy.parsing.sympy_parser import (parse_expr, standard_transformations, im
 transformations = standard_transformations + (implicit_multiplication,) + (function_exponentiation,) + (convert_xor,) + (rationalize,)
 a,b,c,d,x,y,z,u,v,w = symbols('a b c d x y z u v w') 
 
+# make function and it's derivative from string
 def get_func_and_st_der(str):
     f = parse_expr(str, transformations=transformations)
     def f1(u):   
@@ -30,10 +31,3 @@ def get_func_and_st_der(str):
         return np.array(der)
 
     return f1, get_standart_der
-
-
-#expr = parse_expr("x**2 + sin(y) + S(10)/2", transformations=transformations)
-#print(expr.subs([(x,1),(y,2)]).evalf())
-#f, der = get_func_and_st_der("x^2+x*y+y^2")
-#print(f([1, 9]))
-#print(der([1,9]))
