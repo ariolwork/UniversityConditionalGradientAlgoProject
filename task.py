@@ -104,16 +104,6 @@ class One_variable_function_minimisation_methods:
         return -1
     #---------------------------------------------------
     @staticmethod
-    def broken_line_method(func, a, b, L, eps=0.000001):
-        def go(f, u, u0):
-            return f(u0)-L*abs(u-u0)
-        u0 = (a+b)/2
-        p = []
-        while True:
-            u0 = max()
-        return -1
-    #---------------------------------------------------
-    @staticmethod
     def tangent_method(func, a, b, eps=0.000001):
         while True:
             if func.fder(a)>=0:
