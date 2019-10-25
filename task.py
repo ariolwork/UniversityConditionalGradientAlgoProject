@@ -1,19 +1,18 @@
 from scipy.optimize import linprog
 import math
 # от рукинаписанные нужные части numpy
-from my_numpy import *
-
+from my_numpy import np, my_list
 eps = 0.00001
 
 
 # class that contain function, it's derivative and spetial combination for optimization
 class Func:
     def __init__(self, func, func_der):
-        self.f = func
-        self.fder = func_der
+        self.f = func # function J(u)
+        self.fder = func_der # function derivate J'(u)
         
     def J_k(self, u_k, u):
-        return sum(self.fder(u_k) * (u - u_k))
+        return sum(self.fder(u_k) * (u - u_k)) #function J_k(u)
         
 # class that contain some type frames for optimisation and minimization method for this type of frames and linear function
 class Frames:
@@ -165,6 +164,7 @@ def frames_minnimize_function(func, frames, u_k):
 # minimisation function(symplex method) for spetioal(linear) type of frames
 def symplex_meyhod_minimize_function(func, frames, u_k):
     return np.array(linprog(func.fder(u_k), frames.A, frames.b).x)
+    
 
 # method for different stop rules
 def calculate_m(job, eps, steps):

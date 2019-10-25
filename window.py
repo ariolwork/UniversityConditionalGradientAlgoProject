@@ -1,6 +1,5 @@
 from tkinter import *
 #from tkinter import messagebox
-from my_numpy import np
 from tkinter.scrolledtext import ScrolledText
 from task import *
 from tests import *
@@ -21,7 +20,7 @@ root.title("F")
 root.geometry("600x600")
 # window status
 status = 0  #0 - примеры 1- ввод своей функции
-alpha_type = IntVar() # type number of chosen alpha
+alpha_type = IntVar() # type number of chosen alphaGhbdtn
 alpha_type.set(1)
 alpha_text = StringVar() # text describtion of chosen alpha
 alpha_text.set(alpha1)
@@ -46,14 +45,14 @@ class Calculate_and_print_ans:
         self.root.geometry("800x400")
     # call calculation
     def calculate(self, func, frames, fder, u_0,  alpha_num, eps, steps):
-        func0 = Func(func, fder)
+        Func0 = Func(func, fder)
         alpha = alpha_1
         if alpha_num.get() == 2:
             alpha = alpha_2
         elif alpha_num.get() == 3:
             alpha = alpha_3
         print(alpha_num.get())
-        job = Job(func0, frames0, np.array(list(map(float, (u_0.split(";"))))), alpha) 
+        job = Job(Func0, frames, np.array(list(map(float, (u_0.split(";"))))), alpha) 
         job.check_errors()
         print(eps, " ", steps)
         self.answ = calculate_m(job, float(eps), int(steps))

@@ -1,4 +1,5 @@
 from task import *
+from my_numpy import np, my_list
 
 # push tests here
 

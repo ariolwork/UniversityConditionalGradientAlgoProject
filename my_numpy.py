@@ -1,4 +1,5 @@
 # list with modification by need modules
+import numpy
 
 class my_list:
     def __init__(self, a):
@@ -23,6 +24,8 @@ class my_list:
         return self*other
     def __eq__(self, a):
         return my_list([self.list[i] == a.list[i] for i in range(0, len(self.list))])
+    def get_n(self):
+        return numpy.array(self.list)
 
 class np:
     @staticmethod
