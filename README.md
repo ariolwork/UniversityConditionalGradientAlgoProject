@@ -1,6 +1,7 @@
 # uni_conditional_gradient
 conditional gradient method for function minimization
-
+###
+for start use: python3 window.py or ./window.py
 
 
 ## description
