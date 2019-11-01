@@ -141,12 +141,12 @@ def calculate():
     c1.draw()
 
 # create elements of main form
-btn0 = Button(text="examples", background="#ccc", foreground="#000", activebackground="#ccc",
-             padx="10", pady="4", font="Arial 14", width="20", command=examples_button_press)
-btn0.place(relx=.8, rely=.05, anchor="sw", relheight=.05, relwidth=.195, bordermode=INSIDE)
-btn2 = Button(text="calculate", background="#ccc", foreground="#000", activebackground="#ccc",
-             padx="10", pady="4", font="Arial 14", width="20", command=calculate)
-btn2.place(relx=.6, rely=.99, anchor="sw", relheight=.05, relwidth=.395, bordermode=INSIDE)
+#btn0 = Button(text="examples", background="#ccc", foreground="#000", activebackground="#ccc",
+      #       padx="10", pady="4", font="Arial 14", width="20", command=examples_button_press)
+#btn0.place(relx=.8, rely=.05, anchor="sw", relheight=.05, relwidth=.195, bordermode=INSIDE)
+#btn2 = Button(text="calculate", background="#ccc", foreground="#000", activebackground="#ccc",
+     #        padx="10", pady="4", font="Arial 14", width="20", command=calculate)
+#btn2.place(relx=.6, rely=.99, anchor="sw", relheight=.05, relwidth=.395, bordermode=INSIDE)
 
 
 rb1 = Radiobutton(text="Alpha 1", value=1, variable=alpha_type, padx=10, pady=4, font="Arial 14", command=set_alpha_text)

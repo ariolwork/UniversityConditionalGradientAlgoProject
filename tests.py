@@ -1,8 +1,19 @@
 from task import *
 from my_numpy import np, my_list
+import copy
 
 # push tests here
-
+def get_standart_der(f1):
+    def der(u):
+        der = []
+        eps = 0.0000001
+        for i in range(0, len(u)):
+            u1 = copy.copy(u)
+            u1[i] = u1[i]+eps
+            der.append((f1(u1)-f1(u))/eps)
+            u1[i] = u[i]-eps
+        return np.array(der)
+    return der
 
 #test func
 # x^2+xy+y^2
@@ -30,3 +41,13 @@ frames1.setframes(frames1, np.array([[0,1],[0,-1],[1,0],[-1,0]]), np.array([0,1,
 #job3 = Job(func0, frames0, np.array([0, 0]), alpha_1) #u0=(0, 0)
 #job3.check_errors()
 
+
+
+def f1(u):
+    u1 = [(u[i]-i*u[0])*(u[i]-i*u[0])*(u[i]-i*u[0])*(u[i]-i*u[0]) for i in range(len(u))][1:]
+    return 150*sum(u1) + (u[0]-2)*(u[0]-2)*(u[0]-2)*(u[0]-2)
+f1_der = get_standart_der(f1)
+print(f1([1,0,0,0,0]))
+#Ваше задание на второй этап - отладить программу для следующего функционала
+#J(x) = 150*sum_(i=2)^(6)(x(i)-ix(1))^4+(x(1)-2)^4 ---> min
+#g1(x)=sum_(i=1)^(6)(x(i)^2)<=363.
